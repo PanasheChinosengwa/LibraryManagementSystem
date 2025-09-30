@@ -1,0 +1,76 @@
+class Book:
+    def __init__(self, title, author, isbn):
+        self.__title = title        # encapsulation (private attributes)
+        self.__author = author
+        self.__isbn = isbn
+
+    def get_title(self):
+        return self.__title
+
+    def get_author(self):
+        return self.__author
+
+    def calculate_late_fee(self, days_late):
+        # abstract method to be overridden
+        raise NotImplementedError("This method should be overridden by subclasses")
+
+
+class EBook(Book):
+    def __init__(self, title, author, isbn, file_size):
+        super().__init__(title, author, isbn)
+        self.file_size = file_size
+
+    def calculate_late_fee(self, days_late):
+        # eBooks have a lower fee (example rule)
+        return days_late * 0.5
+
+
+class PrintedBook(Book):
+    def __init__(self, title, author, isbn, page_count):
+        super().__init__(title, author, isbn)
+        self.page_count = page_count
+
+    def calculate_late_fee(self, days_late):
+        # printed books have higher fees (example rule)
+        return days_late * 1.0
+
+# Creating book objects with real authors
+ebook1 = EBook("The 48 Laws of Power", "Robert Greene", "ISBN001", 5)
+ebook2 = EBook("Milk and Honey", "Rupi Kaur", "ISBN002", 2)
+printed1 = PrintedBook("The Art of War", "Sun Tzu", "ISBN003", 300)
+printed2 = PrintedBook("Great Expectations", "Charles Dickens", "ISBN004", 505)
+
+# Demonstrating polymorphism
+books = [ebook1, ebook2, printed1, printed2]
+
+for book in books:
+    print(f"{book.get_title()} by {book.get_author()} → Late fee (3 days): {book.calculate_late_fee(3)}")
+
+class Payment:
+    def process_payment(self, amount):
+        raise NotImplementedError("Subclass must implement payment method")
+
+class CreditCardPayment(Payment):
+    def process_payment(self, amount):
+        return f"Paid {amount} using Credit Card"
+
+class PayPalPayment(Payment):
+    def process_payment(self, amount):
+        return f"Paid {amount} using PayPal"
+
+from abc import ABC, abstractmethod
+
+class Borrowable(ABC):
+    @abstractmethod
+    def borrow(self): pass
+
+class Returnable(ABC):
+    @abstractmethod
+    def return_book(self): pass
+class LibrarySystem:
+    def __init__(self, payment_method: Payment):
+        self.payment_method = payment_method
+
+    def pay_fee(self, amount):
+        return self.payment_method.process_payment(amount)
+
