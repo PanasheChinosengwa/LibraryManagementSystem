@@ -1,0 +1,15 @@
+class Book:
+    def __init__(self, title, author, isbn):
+        self.__title = title        # encapsulation (private attributes)
+        self.__author = author
+        self.__isbn = isbn
+
+    def get_title(self):
+        return self.__title
+
+    def get_author(self):
+        return self.__author
+
+    def calculate_late_fee(self, days_late):
+        # abstract method to be overridden
+        raise NotImplementedError("This method should be overridden by subclasses")
