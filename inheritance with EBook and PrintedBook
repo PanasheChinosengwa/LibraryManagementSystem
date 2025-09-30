@@ -1,0 +1,18 @@
+class EBook(Book):
+    def __init__(self, title, author, isbn, file_size):
+        super().__init__(title, author, isbn)
+        self.file_size = file_size
+
+    def calculate_late_fee(self, days_late):
+        # eBooks have a lower fee (example rule)
+        return days_late * 0.5
+
+
+class PrintedBook(Book):
+    def __init__(self, title, author, isbn, page_count):
+        super().__init__(title, author, isbn)
+        self.page_count = page_count
+
+    def calculate_late_fee(self, days_late):
+        # printed books have higher fees (example rule)
+        return days_late * 1.0
