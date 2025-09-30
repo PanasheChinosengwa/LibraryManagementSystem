@@ -1,0 +1,11 @@
+# Creating book objects with real authors
+ebook1 = EBook("The 48 Laws of Power", "Robert Greene", "ISBN001", 5)
+ebook2 = EBook("Milk and Honey", "Rupi Kaur", "ISBN002", 2)
+printed1 = PrintedBook("The Art of War", "Sun Tzu", "ISBN003", 300)
+printed2 = PrintedBook("Great Expectations", "Charles Dickens", "ISBN004", 505)
+
+# Demonstrating polymorphism
+books = [ebook1, ebook2, printed1, printed2]
+
+for book in books:
+    print(f"{book.get_title()} by {book.get_author()} → Late fee (3 days): {book.calculate_late_fee(3)}")
